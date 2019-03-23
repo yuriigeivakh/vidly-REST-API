@@ -1,22 +1,34 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const Joi = require('joi');
 const app = express();
-const { Genre } = require('./models/genre');
-const genres = require('./routes/genres');
-const { Movie } = require('./models/movies');
-const movies = require('./routes/movies');
-const { Rental } = require('./models/rental');
-const rentals = require('./routes/rentals');
 const bodyParser = require('body-parser');
 
-mongoose.Promise = global.Promise;
+const config = require('config');
+const genres = require('./routes/genres');
+const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
+const customers = require('./routes/customers');
+
+if (!config.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwtPrivateKey is not defined');
+  process.exit(1)
+}
+
+// mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/vidly');
 
 app.use(bodyParser.json());
 app.use('/api', genres)
 app.use('/api/movies', movies)
+app.use('/api/movies', movies)
+app.use('/api/genres', genres)
 app.use('/api/rentals', rentals)
+app.use('/api/customers', customers)
+app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 const port = process.env.port || 3000;
 app.listen(port, () => {
