@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const { auth } = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const { Genre } = require('../models/genre');
 
@@ -15,7 +17,14 @@ router.get('/get_genres', (req, res) => {
 
 // POST
 
-router.post('/add_genre', (req, res) => {
+router.post('/', auth, async (req, res) => {
+  let genre = new Genre({ genre: req.body.genre });
+  genre = await genre.save()
+
+  res.send(genre);
+})
+
+router.post('/add_genre', auth, async (req, res) => {
   const genre = new Genre(req.body);
   console.log(req.body);
 
@@ -30,7 +39,7 @@ router.post('/add_genre', (req, res) => {
 
 // UPDATE
 
-router.post('/update_genre', (req, res) => {
+router.post('/update_genre', auth, async (req, res) => {
   Genre.findByIdAndUpdate(req.body.id, req.body, {new: true}, (err, doc) => {
     if (err) return res.status(400).send(err);
     res.json({
@@ -42,7 +51,7 @@ router.post('/update_genre', (req, res) => {
 
 // DELETE
 
-router.delete('/delete_genre', (req, res) => {
+router.delete('/delete_genre', [auth, admin], async (req, res) => {
   let id = req.body.id;
 
   Genre.findByIdAndRemove(id, (err, doc) => {
