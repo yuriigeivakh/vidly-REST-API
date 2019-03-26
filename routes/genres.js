@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+
+const asyncMiddleware = require('../middleware/async');
 const { auth } = require('../middleware/auth');
 const admin = require('../middleware/admin');
 
@@ -8,12 +10,11 @@ const { Genre } = require('../models/genre');
 
 // GET
 
-router.get('/get_genres', (req, res) => {
-  Genre.find().exec((err, doc) => {
-    if (err) return res.status(400).send(err);
-    res.send(doc)
-  })
-})
+router.get('/get_genres', asyncMiddleware(async (req, res) => {
+  // throw new Error('could not connect')
+  const genres = await Genre.find().sort('name');
+  res.send(genres)
+}));
 
 // POST
 
