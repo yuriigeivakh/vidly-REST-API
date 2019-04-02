@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +22,6 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.4",
     "mongoose": "^4.10.8",
-    "winston": "^3.2.1"
+    "supertest": "^4.0.2"
   }
 }
