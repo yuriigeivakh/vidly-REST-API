@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
+const validateObjectId = require('../middleware/validateObjectId');
 const asyncMiddleware = require('../middleware/async');
 const { auth } = require('../middleware/auth');
 const admin = require('../middleware/admin');
@@ -10,16 +11,24 @@ const { Genre } = require('../models/genre');
 
 // GET
 
-router.get('/get_genres', asyncMiddleware(async (req, res) => {
+router.get('/', async (req, res) => {
   // throw new Error('could not connect')
   const genres = await Genre.find().sort('name');
   res.send(genres)
-}));
+});
+
+router.get('/:id', validateObjectId, async (req, res) => {
+  const genre = await Genre.findById(req.params.id);
+
+  if (!genre) return res.status(404).send('The genre with the given ID was not found.');
+
+  res.send(genre);
+});
 
 // POST
 
 router.post('/', auth, async (req, res) => {
-  let genre = new Genre({ genre: req.body.genre });
+  let genre = new Genre({ name: req.body.genre });
   genre = await genre.save()
 
   res.send(genre);

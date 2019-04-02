@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const genreSchema = mongoose.Schema({
-  genre: {
+  name: {
     type: String,
     required: true
   }
-}, {timestamps:true})
+})
 
 const Genre = mongoose.model('Genre', genreSchema);
 
