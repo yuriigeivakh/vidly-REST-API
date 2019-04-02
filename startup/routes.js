@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const error = require('../middleware/error');
+// const error = require('../middleware/error');
 const genres = require('../routes/genres');
 const movies = require('../routes/movies');
 const rentals = require('../routes/rentals');
@@ -19,5 +19,5 @@ module.exports = function(app) {
   app.use('/api/customers', customers)
   app.use('/api/users', users);
   app.use('/api/auth', auth);
-  app.use(error);
+  // app.use(error);
 }
