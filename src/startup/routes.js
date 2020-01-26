@@ -2,17 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // const error = require('../middleware/error');
-const genres = require('../routes/genres');
-const movies = require('../routes/movies');
-const rentals = require('../routes/rentals');
-const users = require('../routes/users');
-const auth = require('../routes/auth');
-const customers = require('../routes/customers');
+const genres = require('../api/genres');
+const movies = require('../api/movies');
+const rentals = require('../api/rentals');
+const users = require('../api/users');
+const auth = require('../api/auth');
+const customers = require('../api/customers');
 
 module.exports = function(app) {
   app.use(bodyParser.json());
-  app.use('/api', genres)
-  app.use('/api/movies', movies)
   app.use('/api/movies', movies)
   app.use('/api/genres', genres)
   app.use('/api/rentals', rentals)

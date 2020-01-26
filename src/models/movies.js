@@ -23,13 +23,15 @@ const movieSchema = mongoose.Schema({
   }
 })
 
-function validateMovie(movie) {
+function validateMovie(req) {
   const schema = {
     title: Joi.string().min(5).max(50).required(),
     genreId: Joi.string().required(),
     numberInStock: Joi.number().min(5).required(),
     dailyRentalRate: Joi.number().min(5).required()
   }
+
+  return Joi.validate(req, schema);
 }
 
 const Movie = mongoose.model('Movie', movieSchema);
