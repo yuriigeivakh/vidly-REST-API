@@ -1,5 +1,6 @@
-const { validate } = require('../models/movies');
-const { Genre } = require('../models/genre');
+const mongoose = require('mongoose');
+
+const { Genre, validate } = require('../models/genre');
 
 const getGenres = async (req, res) => {
     const genres = await Genre.find().sort('name');
@@ -7,6 +8,8 @@ const getGenres = async (req, res) => {
 }
 
 const addGenre = async (req, res) => {
+    const { error } = validate(req.body); 
+    if (error) return res.status(400).send(error.details[0].message);
     const genre = new Genre(req.body);
 
     genre.save((err, doc) => {
