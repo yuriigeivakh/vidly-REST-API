@@ -1,4 +1,4 @@
-## Getting started (Implementation BO/SAP)
+## Getting started
 
 To begin just makes a `yarn`
 
