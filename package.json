@@ -14,7 +14,7 @@
     "node": "13.6.0"
   },
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "config": "^3.2.5",
     "express": "^4.16.2",
